@@ -1,0 +1,71 @@
+<% include ../partials/header %>
+        <div id="auth-container">
+            <div class="container">
+                <% if (messages.length > 0) { let message = JSON.parse(messages[0]) %>
+                    <div class="alert alert-<%= message.state %>" role="alert">
+                        <%= message.message %>
+                    </div>
+                <% } %>
+                <div class="card">
+                    <h5 class="card-header info-color white-text text-center py-4">
+                        <strong>
+                            <% if(type == 'signin') {%> Zaloguj się <% } else { %> Zarejestruj się <% } %>
+                        </strong>
+                    </h5>
+
+                    <div class="card-body px-lg-5 pt-0">
+                        <form class="text-center" method="post" action="<% if(type == 'signin') {%>login<% } else { %>register<% } %>">
+                            <% if(type == 'signup') { %>
+                            <div class="md-form">
+                                <input type="email" id="email" class="form-control" name="email" />
+                                <label for="email">Adres e-mail</label>
+                            </div>
+                            <% } %>
+                            <div class="md-form">
+                                <input type="text" id="name" class="form-control" name="name" />
+                                <label for="name">Nazwa użytkownika</label>
+                            </div>
+
+                            <div class="md-form">
+                                <input type="password" id="password" class="form-control" name="password" />
+                                <label for="password">Hasło</label>
+                            </div>
+
+                            <div class="d-flex justify-content-around">
+                                <% if(type == 'signin') {%>
+                                <div>
+                                    <a href="/user/passwordreset">Zapomniałem hasła</a>
+                                </div>
+                                <% } else { %>
+                                    <div>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="terms" name="terms" required/>
+                                        <label class="form-check-label" for="terms">Akceptuję <a href="/info/regulamin" target="_blank">regulamin</a></label>
+                                    </div>
+                                </div>
+                                <% } %>
+                            </div>
+
+                            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">
+                            <% if(type == 'signin') {%> Zaloguj się <% } else { %> Zarejestruj się <% } %>
+                            </button>
+
+                            <% if(type == 'signin') { %>
+                            <p>
+                                Nie masz jeszcze konta?
+                                <a href="/user/register">Zarejestruj się!</a>
+                            </p>
+                            <% } else { %>
+                                <p>
+                                    Masz już konto?
+                                    <a href="/user/login">Zaloguj się!</a>
+                                </p>
+                            <% } %>
+
+                            <p>Wróc do <a href="/">strony głównej</a>.</p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+<% include ../partials/footer %>

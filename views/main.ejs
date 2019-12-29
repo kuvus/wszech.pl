@@ -1,0 +1,155 @@
+<% include partials/header %>
+        <section class="section-dark bg-city bg-none min-vh-40" id="header">
+            <img id="header-img" src="/img/bg/<%= Math.floor(Math.random() * 11) + 1 %>.jpg" alt="" data-speed="-0.8" class="img-parallax">
+            <div class="container">
+                <h2 class="section-title">
+                    Unikalna wszechpolska sub-domena dla Ciebie!
+                </h2>
+                <hr />
+                <div class="content">
+                    <div class="input-group input-group-wlg mb-3">
+                        <input type="text" class="form-control" placeholder="Twoja subdomena" aria-describedby="button-addon2" id="check-input" style="border:none" />
+
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="input-addon" style="background: #fff; font-style: italic; border:none;">.wszech.pl</span>
+                            <button type="button" id="check-button" class="btn btn-success m-0 btn-still btn-txt-big">
+                                Sprawdź
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="response-panel" class="card text-dark text-center d-none">
+                    <div class="card-body">
+                        <span id="response-icon" class="mb-4"></span>
+                        <h5 class="card-title" id="response-title"></h5>
+                        <p class="card-text" id="response-text"></p>
+                        <a href="#" class="btn btn-success d-none" id="response-btn">Zarejestruj!</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-light min-vh-40">
+            <div class="container">
+                <h2 class="section-title">Zalety Wszech.pl</h2>
+                <hr />
+                <br />
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <i class="far fa-money-bill-alt fa-4x icon purple-gradient z-depth-1"></i><br /><br />
+                        <h3>Całkowicie darmowe</h3>
+                        <p>
+                            Wszystkie subdomeny w naszym serwisie są całkowicie darmowe!
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <i class="fas fa-shipping-fast fa-4x icon aqua-gradient z-depth-1"></i><br /><br />
+                        <h3>Łatwe w rejestracji</h3>
+                        <p>
+                            Wystarczy, że wybierzesz swoją subdomenę i założysz konto, a w ciągu kilku minut ją dostaniesz!
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <i class="fas fa-globe-americas fa-4x icon peach-gradient z-depth-1"></i><br /><br />
+                        <h3>Uniwersalne</h3>
+                        <p>
+                            Subdomena .wszech.pl pasuje do wszystkiego, niezależnie czego dotyczy twoja strona!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="promo">
+            <hr>
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col-md-6">
+                        <a href="http://www.mydevil.net/pp/1CEG5EWO75" target="_blank"><img src="/img/mydevil.png" alt=""></a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="http://webh.pl/?promo=18644" target="_blank"><img src="/img/webhh.png" alt=""></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-dark section-darkish" id="footer-higher">
+            <div class="container-fluid mt-4 mb-3">
+                <div class="row">
+                    <div class="col-md-4 text-md-center">
+                        <h3 class="mb-3">Kontakt</h3>
+                        <p class="footer-text"><i class="fab fa-discord"></i> kuvuś#1337</p>
+                        <p class="footer-text"><i class="far fa-at"></i> kontakt@kuvus.pl</p>
+                    </div>
+                    <div class="col-md-4 text-md-center">
+                        <h3 class="mb-3">Przydatne linki</h3>
+                        <p class="footer-text">
+                            <a href="/info/regulamin">
+                                <i class="fal fa-book"></i>
+                                Regulamin
+                            </a>
+                        </p>
+                        <p class="footer-text">
+                            <a href="/info/polityka-cookies">
+                                <i class="fad fa-cookie-bite"></i>
+                                Polityka cookies
+                            </a>
+                        </p>
+                        <p class="footer-text">
+                            <a href="/info/polityka-prywatnosci">
+                                <i class="fad fa-user-secret"></i>
+                                Polityka prywatności
+                            </a>
+                        </p>
+                    </div>
+                    <div class="col-md-4 text-md-center">
+                        <h3 class="mb-3">Social media</h3>
+                        <p class="footer-text">
+                            <a href="https://www.facebook.com/Wszechpl-115231973201695/">
+                                <i class="fab fa-facebook-square"></i>
+                                Wszech.pl
+                            </a>
+                        </p>
+                        <p class="footer-text">
+                            <a href="https://twitter.com/Wszechpl">
+                                <i class="fab fa-twitter-square"></i>
+                                @Wszechpl
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="modal fade" id="captchaModal" tabindex="-1" role="dialog" aria-labelledby="captchaModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="captchaModalTitle">
+                            Weryfikacja
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="#" method="post" id="captcha-form">
+                        <div class="modal-body text-center">
+                            <div id="captcha-response"></div>
+                            <input type="hidden" name="domain" id="modal-domain-input" />
+                            <div class="g-recaptcha" data-callback="captchaCallback" data-sitekey="6Lc575QUAAAAAIFW_uvxFcZtRkcoyYfnW1itNqbS"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                Anuluj
+                            </button>
+                            <button type="submit" class="btn btn-success">
+                                Sprawdź
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+<% include partials/footer %>
+

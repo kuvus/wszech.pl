@@ -1,0 +1,23 @@
+{
+    "database": {
+        "host": "localhost",
+        "user": "root",
+        "password": "",
+        "database": "wszech"
+    },
+    "captcha": {
+        "secret": "",
+        "key": ""
+    },
+    "cloudflare": {
+        "mail": "",
+        "key": "",
+        "zone": ""
+    },
+    "sendgrid": {
+        "api": "",
+        "mail": "",
+        "mailName": "",
+        "admin": ""
+    }
+}

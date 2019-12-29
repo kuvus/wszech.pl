@@ -1,0 +1,104 @@
+                <div class="content">
+                    <div class="container-fluid">
+                        <% if (messages.length > 0) { let message = JSON.parse(messages[0]) %>
+                            <div class="alert alert-<%= message.state %>" role="alert">
+                                <%= message.message %>
+                            </div>
+                        <% } %>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="">
+                                    <div class="small-box bg-success">
+                                        <div class="inner text-md-center">
+                                            <h3><%- domainCount %></h3>
+                                            <p>Liczba twoich domen</p>
+                                        </div>
+                                        <a href="/user/domains" class="small-box-footer">Przejdź</a>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <div class="small-box bg-gradient-yellow">
+                                        <div class="inner text-md-center text-light">
+                                            <h3><%- limit %></h3>
+                                            <p>Limit posiadanych domen</p>
+                                        </div>
+                                        <a href="#" class="small-box-footer" data-toggle="modal" data-target="#accountTypes">Dowiedz się więcej</a>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <div class="small-box bg-blue">
+                                        <div class="inner text-md-center">
+                                            <h3><%- accountType %></h3>
+                                            <p>Typ twojego konta</p>
+                                        </div>
+                                        <a href="#" class="small-box-footer" data-toggle="modal" data-target="#accountTypes">Dowiedz się więcej</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card card-primary card-outline">
+                                    <div class="card-body">
+                                        <h3>Nowości na Wszech.pl</h3>
+                                        <hr>
+                                        <ul>
+                                            <li>Lorem ipsum dolor sit amet</li>
+                                            <li>Consectetur adipiscing elit</li>
+                                            <li>Integer molestie lorem at massa</li>
+                                            <li>Facilisis in pretium nisl aliquet</li>
+                                            <li>Nulla volutpat aliquam velit
+                                                <ul>
+                                                    <li>Phasellus iaculis neque</li>
+                                                    <li>Purus sodales ultricies</li>
+                                                    <li>Vestibulum laoreet porttitor sem</li>
+                                                    <li>Ac tristique libero volutpat at</li>
+                                                </ul>
+                                            </li>
+                                            <li>Faucibus porta lacus fringilla vel</li>
+                                            <li>Aenean sit amet erat nunc</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="accountTypes" tabindex="-1" role="dialog" aria-labelledby="accountTypes" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                  <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Typy kont</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                  </div>
+                                  <div class="modal-body">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                      <th scope="col">Nazwa</th>
+                                                      <th scope="col">Limit domen</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Basic</td>
+                                                    <td>5</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Premium</td>
+                                                    <td>10</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Unlimited</td>
+                                                    <td>Brak limitu</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                  </div>
+                                  <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Zamknij</button>
+                                  </div>
+                            </div>
+                      </div>
+                </div>

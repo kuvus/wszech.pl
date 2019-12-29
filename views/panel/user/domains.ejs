@@ -1,0 +1,38 @@
+                <div class="content">
+                    <div class="container-fluid text-center">
+
+                            <% if (domains.length < 1) {%>
+                                <p>Nie masz jeszcze żadnej subdomeny :/.</p>
+                                <p>Jeśli chcesz jakąś utworzyć kliknij <a href="#">tutaj</a>.</p> <!-- TODO: we no tutaj linka dej -->
+                            <% } else { %>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Subdomena</th>
+                                        <th scope="col">Data utworzenia</th>
+                                        <th scope="col">Data wygaśnięcia</th>
+                                        <th scope="col">Akcje</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <%for (let i in domains) { %>
+                                    <% let time = domains[i].time %>
+                                    <% let renew = time.getTime(); renew = new Date(renew) %>
+                                    <% renew = new Date(renew.setMonth(renew.getMonth() + domains[i].renew))%>
+                                            <tr>
+                                                <td scope="row"><%= parseInt(i)+1 %></td>
+                                                <td><%= domains[i].domain %><small>.wszech.pl</small></td>
+                                                <td><%= `${time.getDate().toString().length < 2 ? (0+time.getDate().toString()) : time.getDate()}.${(time.getMonth()+1).toString().length < 2 ? (0+(time.getMonth()+1).toString()) : time.getMonth()+1}.${time.getFullYear()} ${time.getHours()}:${time.getMinutes()}` %></td>
+                                                <td><%= `${renew.getDate().toString().length < 2 ? (0+renew.getDate().toString()) : renew.getDate()}.${(renew.getMonth()+1).toString().length < 2 ? (0+(renew.getMonth()+1).toString()) : renew.getMonth()+1}.${renew.getFullYear()} ${renew.getHours()}:${renew.getMinutes()}` %></td>
+                                                <td>
+                                                    <a href="#" class="btn btn-sm btn-success btn-d" data-swal="info" data-stype="renew" data-did="<%= domains[i].id%>">Odnów</a>
+                                                    <a href="#" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#nsModal" data-did="<%= domains[i].id%>">Strefa DNS</a>
+                                                    <a href="#" class="btn btn-sm btn-danger btn-remove btn-d" data-stype="delete" data-swal="warning" data-did="<%= domains[i].id%>">Usuń</a>
+                                                </td>
+                                            </tr>
+                                <% }} %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
