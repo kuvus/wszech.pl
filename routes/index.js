@@ -3,13 +3,11 @@ const router = express.Router()
 const path = require('path')
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
     res.render('main', {title: 'Strona Główna'})
-    // res.sendFile(path.join(__dirname, '..', 'views', 'main.html'))
 })
-router.get('/faq', function(req, res, next) {
+router.get('/faq', function(req, res) {
     res.render('info/faq', {title: 'FAQ'})
-    // res.sendFile(path.join(__dirname, '..', 'views', 'main.html'))
 })
 
 module.exports = router

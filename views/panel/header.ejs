@@ -7,9 +7,12 @@
 
         <title>Wszech.pl &middot; <%= title %></title>
 
+        <link rel="icon" type="image/png" href="/img/icon.png" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Source+Sans+Pro&display=swap">
         <link rel="stylesheet" href="https://cdn.riko.dev/fonts/font-awesome/pro.min.css" />
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
         <link rel="stylesheet" href="/panel/css/adminlte.min.css" />
-        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet" />
+        <link rel="stylesheet" href="/css/panel.css">
     </head>
     <body class="hold-transition sidebar-mini">
         <div class="wrapper">
@@ -24,37 +27,59 @@
                         </li>
                     <% } %>
                 </ul>
-
+                <%  let unread = 0;
+                    if (notifications.notifications.length > 0) {
+                        for (let notU of notifications.notifications) {
+                            if (!notU.read) unread++
+                        }
+                    }
+                %>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown">
-                        <a class="nav-link link-tooltip link-dropdown" href="#" data-placement="bottom" title="Powiadomienia" data-toggle="dropdown">
+                        <a class="nav-link link-tooltip link-dropdown" href="#" data-placement="left" title="Powiadomienia" data-toggle="dropdown" id="notifications">
                             <i class="far fa-bell"></i>
-                            <span class="badge badge-warning navbar-badge">15</span> <!-- TODO: liczba powiadomien -->
+                            <span class="badge badge-warning navbar-badge"><%= unread ? unread : '0' %></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                            <span class="dropdown-header">Masz 15 powiadomień</span> <!-- TODO: liczba powiadomien -->
-                            <div class="dropdown-divider"></div>
-                            <!-- TODO: Loop przez powiadomienia -->
-                            <a href="#" class="dropdown-item">
-                                <i class="fas fa-envelope mr-2"></i> 4 new messages
-                                <span class="float-right text-muted text-sm">3 mins</span>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <i class="fas fa-users mr-2"></i> 8 friend requests
-                                <span class="float-right text-muted text-sm">12 hours</span>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <i class="fas fa-file mr-2"></i> 3 new reports
-                                <span class="float-right text-muted text-sm">2 days</span>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                            <% if (notifications.notifications.length > 0) { %>
+
+                            <% let notificationLoopTimes = notifications.notifications.length < 3 ? notifications.notifications.length : 3  %>
+                            <% for (let notI = 0; notI < notificationLoopTimes; notI++) { %>
+                                <a href="#" class="dropdown-item">
+                                    <%= notifications.notifications[notI].message %>
+                                    <br>
+                                    <span class="float-left text-muted text-sm">
+                                        <%
+                                            let timeSent = Math.floor((Date.now() - new Date(notifications.notifications[notI].date).getTime())/1000/60)
+                                            if (timeSent < 60) {
+                                        %>
+                                            <%- timeSent %> min.
+                                        <%
+                                            } else if (timeSent < 1440) {
+                                        %>
+                                            <%= Math.floor(timeSent/60) %> godz.
+                                        <%
+                                            } else if (timeSent < 2880) {
+                                        %>
+                                            <%= Math.floor(timeSent/60/24) %> dzień
+                                        <%
+                                            } else {
+                                        %>
+                                            <%= Math.floor(timeSent/60/24) %> dni
+                                        <% } %>
+                                    </span>
+                                </a>
+                                <br>
+                                <div class="dropdown-divider"></div>
+                            <% }} else { %>
+                                <span class="dropdown-header">Nie masz żadnych powiadomień</span>
+                                <div class="dropdown-divider"></div>
+                            <% } %>
+                            <a href="#" class="dropdown-item dropdown-footer">Zobacz wszystkie powiadomienia</a>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link link-tooltip" href="logout" data-placement="bottom" title="Wyloguj się"><i class="fas fa-sign-out"></i></a>
+                        <a class="nav-link link-tooltip" href="logout" data-placement="left" title="Wyloguj się"><i class="fas fa-sign-out"></i></a>
                     </li>
                 </ul>
             </nav>

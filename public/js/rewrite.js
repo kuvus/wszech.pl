@@ -4,9 +4,7 @@ const sleep = ms => {
 
 // API response handling
 const check = async data => {
-    console.log(data)
-    const response = JSON.parse(data)
-    console.log(response)
+    const response = data
     switch (response.response.toLowerCase()) {
         case 'success':
             switch (response.exists) {
@@ -91,13 +89,25 @@ function captchaCallback() {
     captchaCheck = true
 }
 
+function captchaExpiredCallback() {
+    captchaCheck = false
+    $('#captcha-response').html(
+        '<div class="alert alert-danger" role="alert">Captcha wygasła. Wykonaj ją ponownie.</div>'
+    )
+}
+
 $('#captchaModal').on('hide.bs.modal', () => {
     btnSwitch('#check-button', 'success')
 })
 
 // Basket
-$('#response-btn').click(() => {
+$('#response-btn').click(e => {
+    e.preventDefault()
     Cookies.set('wszech-basket', $('#check-input').val(), {expires: 2})
+    window.location.href =
+        window.location +
+        'user/domains/create?domain=' +
+        $('#check-input').val()
 })
 
 const find = async () => {
@@ -172,9 +182,6 @@ $('#captcha-form').submit(e => {
             captchaCheck = false
             grecaptcha.reset()
         })
-})
-$('#header').ready(() => {
-    randomBg()
 })
 $(document).ready(() => {
     $('[data-toggle="tooltip"]').tooltip()

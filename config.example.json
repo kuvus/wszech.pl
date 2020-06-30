@@ -1,13 +1,16 @@
 {
+    "salt": "changeThisToYourSalt",
     "database": {
-        "host": "localhost",
-        "user": "root",
+        "connectionLimit": 10,
+        "host": "",
+        "user": "",
         "password": "",
-        "database": "wszech"
+        "database": "",
+        "charset": "utf8"
     },
-    "captcha": {
-        "secret": "",
-        "key": ""
+    "hcaptcha": {
+        "sitekey": "",
+        "secret": ""
     },
     "cloudflare": {
         "mail": "",
@@ -19,5 +22,10 @@
         "mail": "",
         "mailName": "",
         "admin": ""
-    }
+    },
+    "matomo": {
+        "url": "",
+        "token": ""
+    },
+    "requestLogging": true
 }

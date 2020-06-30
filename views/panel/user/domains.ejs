@@ -1,9 +1,8 @@
                 <div class="content">
                     <div class="container-fluid text-center">
-
                             <% if (domains.length < 1) {%>
                                 <p>Nie masz jeszcze żadnej subdomeny :/.</p>
-                                <p>Jeśli chcesz jakąś utworzyć kliknij <a href="#">tutaj</a>.</p> <!-- TODO: we no tutaj linka dej -->
+                                <p>Jeśli chcesz jakąś utworzyć kliknij <a href="/user/domains/create">tutaj</a>.</p>
                             <% } else { %>
                                 <table class="table">
                                     <thead>
@@ -22,17 +21,77 @@
                                     <% renew = new Date(renew.setMonth(renew.getMonth() + domains[i].renew))%>
                                             <tr>
                                                 <td scope="row"><%= parseInt(i)+1 %></td>
-                                                <td><%= domains[i].domain %><small>.wszech.pl</small></td>
+                                                <td><%= domains[i].domain.replace('.wszech.pl', '') %><small>.wszech.pl</small></td>
                                                 <td><%= `${time.getDate().toString().length < 2 ? (0+time.getDate().toString()) : time.getDate()}.${(time.getMonth()+1).toString().length < 2 ? (0+(time.getMonth()+1).toString()) : time.getMonth()+1}.${time.getFullYear()} ${time.getHours()}:${time.getMinutes()}` %></td>
                                                 <td><%= `${renew.getDate().toString().length < 2 ? (0+renew.getDate().toString()) : renew.getDate()}.${(renew.getMonth()+1).toString().length < 2 ? (0+(renew.getMonth()+1).toString()) : renew.getMonth()+1}.${renew.getFullYear()} ${renew.getHours()}:${renew.getMinutes()}` %></td>
                                                 <td>
-                                                    <a href="#" class="btn btn-sm btn-success btn-d" data-swal="info" data-stype="renew" data-did="<%= domains[i].id%>">Odnów</a>
-                                                    <a href="#" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#nsModal" data-did="<%= domains[i].id%>">Strefa DNS</a>
-                                                    <a href="#" class="btn btn-sm btn-danger btn-remove btn-d" data-stype="delete" data-swal="warning" data-did="<%= domains[i].id%>">Usuń</a>
+                                                    <% if ((renew.getTime() - Date.now())/1000/60/60/24 > 35) { %>
+                                                        <span class="d-inline-block link-tooltip" tabindex="0" data-placement="bottom" title="Subdomenę można przedłużyć miesiąc przed końcem ważności.">
+                                                    <% } %>
+                                                        <a href="#" class="btn btn-sm bg-gradient-success btn-d <% if ((renew.getTime() - Date.now())/1000/60/60/24 > 35) { %>disabled<% } %>" data-swal="info" data-stype="renew" data-dname="<%= domains[i].domain %>" data-did="<%= domains[i].id%>">Odnów</a>
+                                                    <% if ((renew.getTime() - Date.now())/1000/60/60/24 > 35) { %>
+                                                        </span>
+                                                    <% } %>
+                                                    <a href="#" class="btn btn-sm bg-gradient-info btn-manage-dns" data-toggle="modal" data-target="#dnsZone" data-dname="<%= domains[i].domain %>" data-did="<%= domains[i].id%>">Zarządzanie DNS</a>
+                                                    <a href="#" class="btn btn-sm bg-gradient-danger btn-remove btn-d" data-stype="delete" data-swal="warning" data-dname="<%= domains[i].domain %>" data-did="<%= domains[i].id%>">Usuń</a>
                                                 </td>
                                             </tr>
                                 <% }} %>
                             </tbody>
                         </table>
+                        <a href="domains/create" class="btn bg-gradient-blue text-center btn-lg mt-3">Utwórz nową subdomenę</a>
                     </div>
                 </div>
+                <div class="modal fade" id="dnsZone" tabindex="-1" role="dialog" aria-labelledby="accountTypes" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                  <div class="modal-header">
+                                        <h5 class="modal-title">Zarządzanie DNS</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                  </div>
+                                  <div class="modal-body">
+                                        <form>
+                                            <input type="text" class="d-none" id="domain-ID">
+                                            <input type="text" class="d-none" id="domain-name">
+                                            <div class="form-group">
+                                                <label for="zoneEditorType">Typ wpisu DNS</label>
+                                                <select class="form-control" id="zoneEditorType">
+                                                    <option>A</option>
+                                                    <option>CNAME</option>
+                                                    <option>NS</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="zoneEditorContent">Treść wpisu DNS</label>
+                                                <input type="email" class="form-control" id="zoneEditorContent" placeholder="1.1.1.1">
+                                            </div>
+                                            <div class="custom-control custom-checkbox d-none" id="proxyCheck">
+                                                <input class="custom-control-input" type="checkbox" id="proxy" name="proxied">
+                                                <label for="proxy" class="custom-control-label">Proxy CloudFlare</label>
+                                                <p>Dostępne tylko dla typu wpisu A oraz CNAME</p>
+                                            </div>
+                                        </form>
+                                  </div>
+                                  <div class="modal-footer">
+                                        <button type="button" class="btn bg-gradient-primary" data-dismiss="modal">Zamknij</button>
+                                        <button id="domain-update" type="button" class="btn bg-gradient-success" data-dismiss="modal">Zapisz</button>
+                                  </div>
+                            </div>
+                      </div>
+                </div>
+                <script>
+                    let domains = {}
+                    <%
+                        for (let domain of domains) {
+                            %>
+                                domains.<%- domain.domain.replace('.wszech.pl', '') %> = {
+                                    record: `<%- domain.record %>`,
+                                    recordType: `<%- domain.type %>`,
+                                    proxied: <%- domain.proxied === 1 %>
+                                }
+                            <%
+                        }
+                    %>
+                </script>

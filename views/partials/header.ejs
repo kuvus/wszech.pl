@@ -10,14 +10,25 @@
         <title>Wszech.pl &middot; <%= title %></title>
 
         <!-- Styles -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
         <link rel="stylesheet" href="/css/bootstrap.min.css" />
         <link rel="stylesheet" href="/css/mdb-pro.min.css" />
+        <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css">-->
         <link rel="stylesheet" href="https://cdn.riko.dev/fonts/font-awesome/pro.min.css" />
         <link rel="stylesheet" href="/css/style.css" />
 
         <link rel="icon" type="image/png" href="/img/icon.png" />
 
-        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <!--<script src="https://www.google.com/recaptcha/api.js" async defer></script>-->
+
+        <% if (title == 'Logowanie' || title == 'Rejestracja') { %>
+            <style>
+                body {
+                    background: url("/img/bg/<%= Math.floor(Math.random() * 11) + 1 %>.jpg");
+                    background-size: cover;
+                }
+            </style>
+        <% } %>
     </head>
     <body>
         <nav class="navbar navbar-expand-md navbar-light" id="top-nav">

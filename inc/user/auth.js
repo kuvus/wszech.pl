@@ -1,17 +1,37 @@
-const db = require('../db')
+const db = require(__basedir + '/inc/db')
 const argon = require('argon2')
 const md5 = require('md5')
-const sendMail = require('../mail')
-const logger = require('../logger')
+const sendMail = require(__basedir + '/inc/mail')
+const logger = require(__basedir + '/inc/logger')
+const {salt} = require(__basedir + '/config.json')
 
 const mailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 const nameRegex = /^[a-zA-Z0-9]+$/u
+
+const checkExistence = (name, mail, callback) => {
+    if (name && mail && callback) {
+        db.query('SELECT * FROM users WHERE name = ?', name, (err, result) => {
+            if (result.length > 0) return callback({exists: true, type: 'name'})
+            db.query(
+                'SELECT * FROM users WHERE mail = ?',
+                mail,
+                (err2, result2) => {
+                    if (result2.length > 0)
+                        return callback({exists: true, type: 'mail'})
+                    else return callback({exists: false})
+                }
+            )
+        })
+    } else {
+        return false
+    }
+}
 
 exports.create = async (name, password, mail, callback) => {
     if (name.length > 0 && password.length > 0 && mail.length > 0) {
         if (mailRegex.test(mail)) {
             if (nameRegex.test(name)) {
-                db.checkExistence(name, mail, async response => {
+                checkExistence(name, mail, async response => {
                     if (response.exists) {
                         if (response.type === 'name') {
                             return callback({
@@ -33,7 +53,7 @@ exports.create = async (name, password, mail, callback) => {
                         }
                     }
 
-                    const confirmationCode = md5(name + Date.now())
+                    const confirmationCode = md5(salt + name + Date.now())
 
                     try {
                         const pass = await argon
@@ -41,9 +61,7 @@ exports.create = async (name, password, mail, callback) => {
                                 type: argon.argon2id,
                             })
                             .catch(e => {
-                                logger.error(
-                                    `Argon2 error: ${e} - ${Date.now()}`
-                                )
+                                logger.error(`Argon2 error: ${e}`)
                             })
                         await db.query(
                             'INSERT INTO users (name, password, mail, code) VALUES (?, ?, ?, ?)',
@@ -67,7 +85,7 @@ exports.create = async (name, password, mail, callback) => {
                             )
                             .catch(e => {
                                 logger.error(
-                                    `Mail send error: ${e} - ${name}:${mail} - ${Date.now()}`
+                                    `Mail send error: ${e} - ${name}:${mail}`
                                 )
                                 callback({
                                     success: false,
@@ -77,7 +95,7 @@ exports.create = async (name, password, mail, callback) => {
                             })
                         return callback({success: true})
                     } catch (e) {
-                        logger.error(`DB error: ${e} - ${Date.now()}`)
+                        logger.error(`Auth error: ${e}`)
                         return callback({
                             success: false,
                             message: 'Wystąpił nieoczekiwany błąd.',
@@ -101,4 +119,26 @@ exports.create = async (name, password, mail, callback) => {
             success: false,
             message: 'Nie wypełniłeś wszystkich pól!',
         })
+}
+
+exports.changePassword = async (
+    username,
+    oldPassword,
+    newPassword,
+    callback
+) => {
+    if (
+        !(
+            username.length > 0 &&
+            oldPassword.length > 0 &&
+            newPassword.length > 0
+        )
+    ) {
+        return callback({
+            success: false,
+            message: 'Niepoprawne zapytanie.',
+        })
+    }
+
+    //    TODO: skończ to tutaj - zmiana hasła
 }

@@ -32,9 +32,7 @@ module.exports = (req, res) => {
                     .then()
                     .catch(e => {
                         logger.error(
-                            `Mail send error: ${e} - ${req.user.name} - ${
-                                req.ip
-                            } - ${Date.now()}`
+                            `Mail send error: ${e} - ${req.user.name} - ${req.ip}`
                         )
                         req.flash(
                             'activationMailMessage',

@@ -1,2 +1,7 @@
 exports.check = require('./check')
-exports.mail = require('./mail')
+exports.register = require('./register')
+exports.registerCheck = require('./registerCheck')
+exports.deleteDomain = require('./deleteDomain')
+exports.renew = require('./renew')
+exports.notifications = require('./notifications')
+exports.updateDomain = require('./updateDomain')

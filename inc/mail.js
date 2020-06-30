@@ -31,7 +31,7 @@ const activation = async (mail, user, code, callback) => {
             callback(true, '')
         })
         .catch(error => {
-            logger.error(`Mail send error: ${error} - ${Date.now()}`)
+            logger.error(`Mail send error: ${error}`)
             callback(false, error)
         })
 }

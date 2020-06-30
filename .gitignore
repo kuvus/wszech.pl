@@ -1,0 +1,10 @@
+.idea
+.git
+node_modules/
+public/css/fonts/
+public/md/
+config.json
+logs
+inc/test.js
+todo.txt
+databaseLayout.md

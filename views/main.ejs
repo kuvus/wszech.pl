@@ -23,7 +23,7 @@
                         <span id="response-icon" class="mb-4"></span>
                         <h5 class="card-title" id="response-title"></h5>
                         <p class="card-text" id="response-text"></p>
-                        <a href="#" class="btn btn-success d-none" id="response-btn">Zarejestruj!</a>
+                        <a href="?" class="btn btn-success d-none" id="response-btn">Zarejestruj!</a>
                     </div>
                 </div>
             </div>
@@ -64,41 +64,44 @@
             <hr>
             <div class="container text-center">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <a href="http://www.mydevil.net/pp/1CEG5EWO75" target="_blank"><img src="/img/mydevil.png" alt=""></a>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <a href="http://webh.pl/?promo=18644" target="_blank"><img src="/img/webhh.png" alt=""></a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="https://www.lvlup.pro" target="_blank"><img src="/img/lvlup.png" alt=""></a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="section-dark section-darkish" id="footer-higher">
+        <section class="section-dark section-darkish mt-5" id="footer-higher">
             <div class="container-fluid mt-4 mb-3">
                 <div class="row">
                     <div class="col-md-4 text-md-center">
                         <h3 class="mb-3">Kontakt</h3>
                         <p class="footer-text"><i class="fab fa-discord"></i> kuvuś#1337</p>
-                        <p class="footer-text"><i class="far fa-at"></i> kontakt@kuvus.pl</p>
+                        <p class="footer-text"><i class="fas fa-at"></i> kontakt@kuvus.pl</p>
                     </div>
                     <div class="col-md-4 text-md-center">
                         <h3 class="mb-3">Przydatne linki</h3>
                         <p class="footer-text">
                             <a href="/info/regulamin">
-                                <i class="fal fa-book"></i>
+                                <i class="fas fa-book"></i>
                                 Regulamin
                             </a>
                         </p>
                         <p class="footer-text">
                             <a href="/info/polityka-cookies">
-                                <i class="fad fa-cookie-bite"></i>
+                                <i class="fas fa-cookie-bite"></i>
                                 Polityka cookies
                             </a>
                         </p>
                         <p class="footer-text">
                             <a href="/info/polityka-prywatnosci">
-                                <i class="fad fa-user-secret"></i>
+                                <i class="fas fa-user-secret"></i>
                                 Polityka prywatności
                             </a>
                         </p>
@@ -135,9 +138,11 @@
                     </div>
                     <form action="#" method="post" id="captcha-form">
                         <div class="modal-body text-center">
+
                             <div id="captcha-response"></div>
                             <input type="hidden" name="domain" id="modal-domain-input" />
-                            <div class="g-recaptcha" data-callback="captchaCallback" data-sitekey="6Lc575QUAAAAAIFW_uvxFcZtRkcoyYfnW1itNqbS"></div>
+                            <div class="h-captcha" data-callback="captchaCallback" data-expired-callback="captchaExpiredCallback" data-sitekey="f8a69856-b6c1-4e71-aecf-6fa80128d6d5"></div>
+                            <!--<div class="g-recaptcha" data-callback="captchaCallback"  data-sitekey="6Lc575QUAAAAAIFW_uvxFcZtRkcoyYfnW1itNqbS"></div>-->
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">

@@ -8,7 +8,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="">
-                                    <div class="small-box bg-success">
+                                    <div class="small-box bg-gradient-success">
                                         <div class="inner text-md-center">
                                             <h3><%- domainCount %></h3>
                                             <p>Liczba twoich domen</p>
@@ -17,16 +17,22 @@
                                     </div>
                                 </div>
                                 <div class="">
-                                    <div class="small-box bg-gradient-yellow">
+                                    <div class="small-box bg-gradient-cyan">
                                         <div class="inner text-md-center text-light">
-                                            <h3><%- limit %></h3>
+                                            <h3>
+                                                <% if (limit == 0) { %>
+                                                    <i class="fal fa-infinity"></i>
+                                                <% } else { %>
+                                                    <%= limit %>
+                                                <% } %>
+                                            </h3>
                                             <p>Limit posiadanych domen</p>
                                         </div>
                                         <a href="#" class="small-box-footer" data-toggle="modal" data-target="#accountTypes">Dowiedz się więcej</a>
                                     </div>
                                 </div>
                                 <div class="">
-                                    <div class="small-box bg-blue">
+                                    <div class="small-box bg-gradient-blue">
                                         <div class="inner text-md-center">
                                             <h3><%- accountType %></h3>
                                             <p>Typ twojego konta</p>
@@ -40,22 +46,7 @@
                                     <div class="card-body">
                                         <h3>Nowości na Wszech.pl</h3>
                                         <hr>
-                                        <ul>
-                                            <li>Lorem ipsum dolor sit amet</li>
-                                            <li>Consectetur adipiscing elit</li>
-                                            <li>Integer molestie lorem at massa</li>
-                                            <li>Facilisis in pretium nisl aliquet</li>
-                                            <li>Nulla volutpat aliquam velit
-                                                <ul>
-                                                    <li>Phasellus iaculis neque</li>
-                                                    <li>Purus sodales ultricies</li>
-                                                    <li>Vestibulum laoreet porttitor sem</li>
-                                                    <li>Ac tristique libero volutpat at</li>
-                                                </ul>
-                                            </li>
-                                            <li>Faucibus porta lacus fringilla vel</li>
-                                            <li>Aenean sit amet erat nunc</li>
-                                        </ul>
+                                        <%- broadcast %>
                                     </div>
                                 </div>
                             </div>
@@ -64,7 +55,7 @@
                 </div>
 
                 <div class="modal fade" id="accountTypes" tabindex="-1" role="dialog" aria-labelledby="accountTypes" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                   <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel">Typy kont</h5>
@@ -72,26 +63,38 @@
                                           <span aria-hidden="true">&times;</span>
                                         </button>
                                   </div>
-                                  <div class="modal-body">
+                                  <div class="modal-body text-center">
                                         <table class="table table-striped">
                                             <thead>
                                                 <tr>
-                                                      <th scope="col">Nazwa</th>
-                                                      <th scope="col">Limit domen</th>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Basic</th>
+                                                    <th scope="col">Premium</th>
+                                                    <th scope="col">Unlimited</th>
+                                                    <th scope="col">Partner</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td>Basic</td>
+                                                    <td>Limit subdomen</td>
                                                     <td>5</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Premium</td>
                                                     <td>10</td>
+                                                    <td><i class="fas fa-infinity"></i></td>
+                                                    <td><i class="fas fa-infinity"></i></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Unlimited</td>
-                                                    <td>Brak limitu</td>
+                                                    <td>Czas odnowienia</td>
+                                                    <td>6 msc.</td>
+                                                    <td>1 rok</td>
+                                                    <td>1 rok</td>
+                                                    <td>6 msc.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>API</td>
+                                                    <td><i class="fas fa-times"></i></td>
+                                                    <td><i class="fas fa-times"></i></td>
+                                                    <td><i class="fas fa-times"></i></td>
+                                                    <td><i class="fas fa-check"></i></td>
                                                 </tr>
                                             </tbody>
                                         </table>

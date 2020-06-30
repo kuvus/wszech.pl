@@ -3,7 +3,7 @@ const router = express.Router()
 
 // TODO: skończ to wreszcie xD
 
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
     res.redirect('https://wszech.pl')
 })
 

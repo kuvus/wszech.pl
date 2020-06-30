@@ -1,0 +1,109 @@
+                <div class="content">
+                    <div class="container-fluid">
+                        <div class="container">
+                            <form action="/api/register" method="post">
+                                <div class="card card-outline card-primary" id="cardOne">
+                                    <div class="card-header" id="headingOne">
+                                        <h5 class="mb-0">
+                                            1. Wybierz swoją subdomenę
+                                        </h5>
+                                    </div>
+
+                                    <div id="collapseStepOne" class="collapse show" aria-labelledby="headingOne">
+                                        <div class="card-body">
+                                            <div class="alert alert-danger d-none" role="alert" id="stepOneError"></div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control form-control-lg text-md-right" id="domainName" placeholder="Wpisz subdomenę jaką chcesz zarejestrować" aria-label="Subdomena" aria-describedby="domainNameAddon" <% if (domain) { %> value="<%= domain %>" <% } %> required>
+                                                    <div class="input-group-append" id="domainNameAddon">
+                                                        <span class="input-group-text">.wszech.pl</span>
+                                                        <button class="btn bg-gradient-primary" id="registerCheck">Sprawdź</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card card-outline card-secondary"  id="cardTwo">
+                                    <div class="card-header" id="headingTwo">
+                                        <h5 class="mb-0">
+                                            2. Dodaj wpis dns
+                                        </h5>
+                                    </div>
+                                    <div id="collapseStepTwo" class="collapse" aria-labelledby="headingTwo">
+                                        <div class="card-body">
+                                            <div class="alert alert-danger d-none" role="alert" id="stepTwoError"></div>
+                                            <div class="form-group">
+                                                <label class="form-check-label" for="recordType">Wybierz typ wpisu</label>
+                                                <select class="form-control" name="recordType" id="recordType">
+                                                    <option value="none">Wybierz typ</option>
+                                                    <option value="A">A</option>
+                                                    <option value="CNAME">CNAME</option>
+                                                    <option value="NS">NS</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-check-label" for="recordValue">Podaj wartość wpisu</label>
+                                                <input type="text" class="form-control" id="recordValue" name="recordValue">
+                                            </div>
+                                            <div class="custom-control custom-checkbox d-none" id="proxyCheck">
+                                                <input class="custom-control-input" type="checkbox" id="proxy" name="proxied">
+                                                <label for="proxy" class="custom-control-label">Proxy CloudFlare</label>
+                                                <p>Dostępne tylko dla typu wpisu A oraz CNAME</p>
+                                            </div>
+                                            <br>
+                                            <button type="button" class="btn bg-gradient-primary" id="formBackToOne"><i class="far fa-caret-left"></i> Cofnij</button>
+                                            <button type="button" class="btn bg-gradient-success float-md-right" id="stepTwoConfirm">Przejdź dalej</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card card-outline card-secondary"  id="cardThree">
+                                    <div class="card-header" id="headingThree">
+                                        <h5 class="mb-0">
+                                            3. Zakończenie rejestracji
+                                        </h5>
+                                    </div>
+                                    <div id="collapseStepThree" class="collapse" aria-labelledby="headingTwo">
+                                        <div class="card-body">
+                                            <div class="alert alert-danger d-none" role="alert" id="stepThreeError"></div>
+                                            <div class="alert alert-success d-none" role="alert" id="stepThreeSuccess"></div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <b>Wybrana subdomena:</b>
+                                                    <p id="subdomainConfirm"></p>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <b>Wpis dns:</b>
+                                                    <div id="recordConfirm"></div>
+                                                </div>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="terms" name="terms" required>
+                                                <label class="custom-control-label" for="terms">Akceptuję regulamin</label>
+                                            </div>
+                                            <br>
+                                            <button type="button" class="btn bg-gradient-primary" id="formBackToTwo"><i class="far fa-caret-left"></i> Cofnij</button>
+                                            <button type="button" class="btn bg-gradient-success float-md-right" id="subdomainRegistrationFinalSubmit">Zarejestruj</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="promo" class="text-center">
+                            <h3>Nie masz jeszcze hostingu?</h3>
+                            <div class="container text-center">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <a href="http://www.mydevil.net/pp/1CEG5EWO75" target="_blank"><img src="/img/mydevil.png" alt=""></a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a href="http://webh.pl/?promo=18644" target="_blank"><img src="/img/webhh.png" alt=""></a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a href="https://www.lvlup.pro" target="_blank"><img src="/img/lvlup.png" alt=""></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>

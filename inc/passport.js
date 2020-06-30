@@ -114,10 +114,10 @@ passport.use(
                                         return done(null, result[0])
                                     })
                                     .catch(e => {
-                                        console.log(e)
+                                        logger.error(`Auth error: ${e}`)
                                     })
                             } catch (e) {
-                                console.log(e)
+                                logger.error(`Auth error: ${e}`)
                                 return done(
                                     null,
                                     false,
@@ -132,6 +132,15 @@ passport.use(
                 } catch (e) {
                     return done(e)
                 }
+            } else {
+                return done(
+                    null,
+                    false,
+                    req.flash(
+                        'loginMessage',
+                        '{"state": "danger", "message": "Nie znaleziono takiego użytkownika."}'
+                    )
+                )
             }
         }
     )
