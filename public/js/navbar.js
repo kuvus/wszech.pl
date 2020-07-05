@@ -1,20 +1,18 @@
-const navbar = $('#top-nav')
-const logo = $('#nav-logo')
-function navChange() {
-    if ($(window).scrollTop() > 0) {
-        navbar.addClass('scrolled sticky-top')
-        logo.src = '/img/icon.png'
-        logo.height = '10px'
+const navbar = document.getElementById('top-nav')
+let scrollTop = 0
+
+function navChange(scrollTop) {
+    if (scrollTop > 0) {
+        navbar.classList.add('scrolled')
     } else {
-        navbar.removeClass('scrolled sticky-top')
-        logo.src = '/img/logo.png'
+        navbar.classList.remove('scrolled')
     }
 }
-$(window).on('scroll', async function() {
+
+window.addEventListener('scroll', async () => {
+    scrollTop = window.scrollY
     if (scrollActive === true) {
         await sleep(500)
-        await navChange()
-    } else {
-        await navChange()
-    }
+        await navChange(scrollTop)
+    } else await navChange(scrollTop)
 })
