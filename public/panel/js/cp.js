@@ -1,5 +1,7 @@
 const ipRegex = /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/
-const domainRegex = /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$/
+const cnameRegex = /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$/
+const domainRegex = /^([aA-zZ1-9])+$/
+
 $('.btn-d').click(function () {
     const type = $(this).data('swal') ? $(this).data('swal') : false
     const action = $(this).data('swal') ? $(this).data('stype') : false
@@ -107,12 +109,22 @@ $('.btn-d').click(function () {
 
 $('#registerCheck').click(function (e) {
     e.preventDefault()
+    if (!domainRegex.test($('#domainName').val())) {
+        $('#stepOneError').removeClass('d-none')
+        $('#stepOneError').text('Subdomena zawiera niedozwolone znaki.')
+        return
+    }
     if (!$('#domainName').val().length > 0) {
         $('#stepOneError').removeClass('d-none')
         $('#stepOneError').text('Nie podałeś żadnej subdomeny.')
     } else {
         let domain = $('#domainName').val()
         $.post('/api/registerCheck', {domain}).done((response) => {
+            if (response.error) {
+                $('#stepOneError').removeClass('d-none')
+                $('#stepOneError').text(response.response)
+                return
+            }
             if (response.exists) {
                 $('#stepOneError').removeClass('d-none')
                 $('#stepOneError').text('Podana subdomena już istnieje.')
@@ -150,7 +162,7 @@ $('#stepTwoConfirm').click(function (e) {
                 'Wpis typu A musi mieć wartość będącą adresem IP.'
             )
         }
-    } else if (!domainRegex.test($('#recordValue').val())) {
+    } else if (!cnameRegex.test($('#recordValue').val())) {
         stepTwoError.removeClass('d-none')
         return stepTwoError.text(
             'Wpis typu CNAME musi mieć wartość będącą domeną.'
