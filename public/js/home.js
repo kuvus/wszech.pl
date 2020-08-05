@@ -7,49 +7,61 @@ const captchaModal = document.getElementById('captchaModal')
 const captchaForm = document.getElementById('captcha-form')
 const captchaResponseBox = document.getElementById('captcha-response')
 
-const sleep = ms => {
-    return new Promise(resolve => setTimeout(resolve, ms))
+const sleep = (ms) => {
+    return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-const check = async data => {
+const check = async (data) => {
     const captchaResponse = data.response.toLowerCase()
     if (!captchaResponse) {
         btnSwitch('check-button', 'error')
         responsePanel.classList.remove('d-none')
-        responseIcon.innerHTML = '<i class="fal fa-times-circle text-danger"></i>'
+        responseIcon.innerHTML =
+            '<i class="fal fa-times-circle text-danger"></i>'
         responseTitle.innerHTML = 'Wystąpił błąd przy sprawdzaniu!'
-        responseText.innerHTML = 'Captcha nie została wykonana, spróbuj ponownie.'
+        responseText.innerHTML =
+            'Captcha nie została wykonana, spróbuj ponownie.'
         responseBtn.classList.add('d-none')
     } else {
         if (captchaResponse === 'success') {
             if (data.exists) {
                 btnSwitch('check-button', 'error')
                 responsePanel.classList.remove('d-none')
-                responseIcon.innerHTML = '<i class="fal fa-times-circle text-danger"></i>'
-                responseTitle.innerHTML = 'Ta subdomena jest już zarejestrowana!'
-                responseText.innerHTML = 'Możesz poszukać innej subdomeny, która będzie pasowała do twojej strony!'
+                responseIcon.innerHTML =
+                    '<i class="fal fa-times-circle text-danger"></i>'
+                responseTitle.innerHTML =
+                    'Ta subdomena jest już zarejestrowana!'
+                responseText.innerHTML =
+                    'Możesz poszukać innej subdomeny, która będzie pasowała do twojej strony!'
                 responseBtn.classList.add('d-none')
             } else {
                 btnSwitch('check-button', 'success')
                 responsePanel.classList.remove('d-none')
-                responseIcon.innerHTML = '<i class="fal fa-check-circle text-success"></i>'
-                responseTitle.innerHTML = 'Ta subdomena jest dostępna do rejestracji!'
-                responseText.innerHTML = 'Możesz ją bezpłatnie zarejestrować w 5 minut! Wystarczy, że klikniesz poniższy przycisk i się zarejestrujesz!'
+                responseIcon.innerHTML =
+                    '<i class="fal fa-check-circle text-success"></i>'
+                responseTitle.innerHTML =
+                    'Ta subdomena jest dostępna do rejestracji!'
+                responseText.innerHTML =
+                    'Możesz ją bezpłatnie zarejestrować w 5 minut! Wystarczy, że klikniesz poniższy przycisk i się zarejestrujesz!'
                 responseBtn.classList.remove('d-none')
             }
         } else if (captchaResponse === 'captcha is not completed') {
             btnSwitch('check-button', 'error')
             responsePanel.classList.remove('d-none')
-            responseIcon.innerHTML = '<i class="fal fa-times-circle text-danger"></i>'
+            responseIcon.innerHTML =
+                '<i class="fal fa-times-circle text-danger"></i>'
             responseTitle.innerHTML = 'Wystąpił błąd przy sprawdzaniu!'
-            responseText.innerHTML = 'Captcha nie została wykonana, spróbuj ponownie.'
+            responseText.innerHTML =
+                'Captcha nie została wykonana, spróbuj ponownie.'
             responseBtn.classList.add('d-none')
         } else {
             btnSwitch('check-button', 'error')
             responsePanel.classList.remove('d-none')
-            responseIcon.innerHTML = '<i class="fal fa-times-circle text-danger"></i>'
+            responseIcon.innerHTML =
+                '<i class="fal fa-times-circle text-danger"></i>'
             responseTitle.innerHTML = 'Wystąpił błąd przy sprawdzaniu!'
-            responseText.innerHTML = 'Wystąpił niespodziewany błąd przy sprawdzaniu dostępności subdomeny. Spróbuj ponownie później.'
+            responseText.innerHTML =
+                'Wystąpił niespodziewany błąd przy sprawdzaniu dostępności subdomeny. Spróbuj ponownie później.'
             responseBtn.classList.add('d-none')
         }
     }
@@ -82,14 +94,15 @@ function captchaCallback() {
 
 function captchaExpiredCallback() {
     captchaCheck = false
-    document.getElementById('captcha-response').innerHTML = '<div class="alert alert-danger" role="alert">Captcha wygasła. Wykonaj ją ponownie.</div>'
+    document.getElementById('captcha-response').innerHTML =
+        '<div class="alert alert-danger" role="alert">Captcha wygasła. Wykonaj ją ponownie.</div>'
 }
 
 captchaModal.addEventListener('hide.bs.modal', async () => {
     btnSwitch('check-button', 'success')
 })
 
-document.getElementById('response-btn').addEventListener('click', e => {
+document.getElementById('response-btn').addEventListener('click', (e) => {
     e.preventDefault()
     window.location.href =
         window.location +
@@ -110,13 +123,17 @@ const find = async () => {
         btnSwitch('check-button', 'error') // Change search button state
         responsePanel.classList.remove('d-none') // Display panel under search
         responseTitle.innerHTML = 'Wystąpił błąd przy sprawdzaniu!' // Add message to that panel
+        responseIcon.innerHTML =
+            '<i class="fal fa-times-circle text-danger"></i>'
 
         if (error.type === 'length') {
-            responseText.innerHTML = 'Subdomena, którą podałeś/aś jest za krótka! Minimalna długość, to: <b>2</b>.'
+            responseText.innerHTML =
+                'Subdomena, którą podałeś/aś jest za krótka! Minimalna długość, to: <b>2</b>.'
             responseBtn.classList.add('d-none')
             return false
         } else {
-            responseText.innerHTML = 'Subdomena, którą podałeś/aś zawiera niedozwolone znaki. (Dozwolone znaki A-Z, 1-9)'
+            responseText.innerHTML =
+                'Subdomena, którą podałeś/aś zawiera niedozwolone znaki. (Dozwolone znaki A-Z, 1-9)'
             responseBtn.classList.add('d-none')
             return false
         }
@@ -125,7 +142,9 @@ const find = async () => {
         captchaModal.style.paddingRight = '17px'
         captchaModal.className = 'modal fade show'
         $('#modal-domain-input').val($('#check-input').val())
-        document.getElementById('modal-domain-input').value = document.getElementById('check-input').value
+        document.getElementById(
+            'modal-domain-input'
+        ).value = document.getElementById('check-input').value
     }
 }
 
@@ -133,12 +152,13 @@ document.getElementById('check-button').addEventListener('click', async () => {
     await find()
 })
 
-captchaForm.addEventListener('submit', async e => {
+captchaForm.addEventListener('submit', async (e) => {
     e.preventDefault()
 
     if (!captchaCheck) {
         captchaResponseBox.classList.remove('d-none')
-        captchaResponseBox.innerHTML = '<div class="alert alert-danger" role="alert">Captcha nie została zakończona. Spróbuj ponownie.</div>'
+        captchaResponseBox.innerHTML =
+            '<div class="alert alert-danger" role="alert">Captcha nie została zakończona. Spróbuj ponownie.</div>'
         return
     }
 
@@ -152,24 +172,24 @@ captchaForm.addEventListener('submit', async e => {
         searchParams.append(pair[0], pair[1])
     }
 
-    await fetch('api/check',
-        {
-            method: 'POST',
-            body: searchParams,
-        },
-    )
-        .then(response => response.json())
-        .then(async data => {
+    await fetch('api/check', {
+        method: 'POST',
+        body: searchParams,
+    })
+        .then((response) => response.json())
+        .then(async (data) => {
             await check(data)
             btnSwitch('check-button', 'success')
             captchaResponseBox.classList.add('d-none')
             captchaCheck = false
             grecaptcha.reset()
-        }).catch(async () => {
+        })
+        .catch(async () => {
             btnSwitch('check-button', 'error')
             responsePanel.classList.remove('d-none')
             responseTitle.innerHTML = 'Wystąpił błąd przy sprawdzaniu!'
-            responseText.innerHTML = 'Wystąpił niespodziewany błąd przy sprawdzaniu dostępności subdomeny. Spróbuj ponownie później.'
+            responseText.innerHTML =
+                'Wystąpił niespodziewany błąd przy sprawdzaniu dostępności subdomeny. Spróbuj ponownie później.'
             responseBtn.classList.add('d-none')
             captchaCheck = false
             grecaptcha.reset()
@@ -178,5 +198,4 @@ captchaForm.addEventListener('submit', async e => {
     window.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('[data-toggle="tooltip"]').tooltip()
     })
-
 })

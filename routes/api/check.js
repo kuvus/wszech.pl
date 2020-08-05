@@ -25,7 +25,7 @@ module.exports = (req, res) => {
             url: 'https://hcaptcha.com/siteverify',
             formData: postData,
         },
-        function(err, httpResponse, body) {
+        function (err, httpResponse, body) {
             if (err)
                 return res.json({
                     error: true,
@@ -34,7 +34,7 @@ module.exports = (req, res) => {
             else {
                 const fr = JSON.parse(body)
                 if (fr.success) {
-                    db.find(req.body.domain, function(data) {
+                    db.find(req.body.domain + '.wszech.pl', function (data) {
                         res.json(data)
                     })
                 } else {
