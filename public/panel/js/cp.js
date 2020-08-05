@@ -1,6 +1,6 @@
 const ipRegex = /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/
 
-$('.btn-d').click(function() {
+$('.btn-d').click(function () {
     const type = $(this).data('swal') ? $(this).data('swal') : false
     const action = $(this).data('swal') ? $(this).data('stype') : false
     const domain = $(this).data('dname')
@@ -18,7 +18,7 @@ $('.btn-d').click(function() {
                     cancelButtonText: 'Nie, dzięki',
                     confirmButtonColor: '#14b036',
                     cancelButtonColor: '#d33',
-                }).then(result => {
+                }).then((result) => {
                     if (result.value) {
                         Swal.fire({
                             title: 'Trwa odnawianie subdomeny',
@@ -33,7 +33,7 @@ $('.btn-d').click(function() {
                             url: '/api/renew',
                             data: {domain},
                         })
-                            .done(async data => {
+                            .done(async (data) => {
                                 if (data.error) {
                                     Swal.fire(
                                         'Wystąpił błąd',
@@ -70,13 +70,13 @@ $('.btn-d').click(function() {
                     cancelButtonText: 'Nie, dzięki',
                     confirmButtonColor: '#d33',
                     cancelButtonColor: '#14b036',
-                }).then(result => {
+                }).then((result) => {
                     if (result.value) {
                         let domainId = $(this).data('did')
                         $.post('/api/deleteDomain', {
                             domainId,
                         })
-                            .done(response => {
+                            .done((response) => {
                                 if (response.error) {
                                     Swal.fire(
                                         'Wystąpił błąd',
@@ -105,14 +105,14 @@ $('.btn-d').click(function() {
     }
 })
 
-$('#registerCheck').click(function(e) {
+$('#registerCheck').click(function (e) {
     e.preventDefault()
     if (!$('#domainName').val().length > 0) {
         $('#stepOneError').removeClass('d-none')
         $('#stepOneError').text('Nie podałeś żadnej subdomeny.')
     } else {
         let domain = $('#domainName').val()
-        $.post('/api/registerCheck', {domain}).done(response => {
+        $.post('/api/registerCheck', {domain}).done((response) => {
             if (response.exists) {
                 $('#stepOneError').removeClass('d-none')
                 $('#stepOneError').text('Podana subdomena już istnieje.')
@@ -128,7 +128,7 @@ $('#registerCheck').click(function(e) {
         })
     }
 })
-$('#stepTwoConfirm').click(function(e) {
+$('#stepTwoConfirm').click(function (e) {
     e.preventDefault()
     let recordType = $('#recordType')
     let recordValue = $('#recordValue')
@@ -152,14 +152,16 @@ $('#stepTwoConfirm').click(function(e) {
     $('#collapseStepTwo').collapse('hide')
     $('#collapseStepThree').collapse('show')
     $('#recordConfirm').html(
-        `<p>Typ: ${recordType.val()}<br>Wartość: ${recordValue.val()}</p>`
+        `<p>Typ: ${recordType.val()}<br>Wartość: ${recordValue
+            .val()
+            .replace(/(<([^>]+)>)/gi, '')}</p>`
     )
     $('#cardTwo').removeClass('card-primary')
     $('#cardTwo').addClass('card-secondary')
     $('#cardThree').removeClass('card-secondary')
     $('#cardThree').addClass('card-primary')
 })
-$('#formBackToOne').click(function() {
+$('#formBackToOne').click(function () {
     $('#collapseStepOne').collapse('show')
     $('#collapseStepTwo').collapse('hide')
     $('#cardTwo').removeClass('card-primary')
@@ -167,7 +169,7 @@ $('#formBackToOne').click(function() {
     $('#cardOne').removeClass('card-secondary')
     $('#cardOne').addClass('card-primary')
 })
-$('#formBackToTwo').click(function() {
+$('#formBackToTwo').click(function () {
     $('#collapseStepTwo').collapse('show')
     $('#collapseStepThree').collapse('hide')
     $('#cardThree').removeClass('card-primary')
@@ -175,7 +177,7 @@ $('#formBackToTwo').click(function() {
     $('#cardTwo').removeClass('card-secondary')
     $('#cardTwo').addClass('card-primary')
 })
-$('#subdomainRegistrationFinalSubmit').click(function(e) {
+$('#subdomainRegistrationFinalSubmit').click(function (e) {
     e.preventDefault()
     if (!$('#domainName').val().length > 0) {
         $('#stepOneError').removeClass('d-none')
@@ -194,7 +196,7 @@ $('#subdomainRegistrationFinalSubmit').click(function(e) {
         }
 
         $.post('/api/register', {domain, type, record, terms, proxied}).done(
-            response => {
+            (response) => {
                 if (response.error) {
                     $('#stepThreeError').removeClass('d-none')
                     $('#stepThreeError').text(response.response)
@@ -208,10 +210,8 @@ $('#subdomainRegistrationFinalSubmit').click(function(e) {
     }
 })
 
-$('.btn-manage-dns').click(function() {
-    let domain = $(this)
-        .data('dname')
-        .replace('.wszech.pl', '')
+$('.btn-manage-dns').click(function () {
+    let domain = $(this).data('dname').replace('.wszech.pl', '')
     let ID = $(this).data('did')
     $('#domain-ID').val(ID)
     $('#zoneEditorType').val(domains[domain]['recordType'])
@@ -225,7 +225,7 @@ $('.btn-manage-dns').click(function() {
         document.getElementById('proxyCheck').classList.remove('d-none')
 })
 
-$('#domain-update').click(function() {
+$('#domain-update').click(function () {
     let dnsType = $('#zoneEditorType').val()
     let dnsRecord = $('#zoneEditorContent').val()
     let proxied = $('#proxy').prop('checked') ? 1 : 0
@@ -246,7 +246,7 @@ $('#domain-update').click(function() {
         domainId,
         domainName,
     })
-        .done(async data => {
+        .done(async (data) => {
             if (data.error) {
                 Swal.fire('Wystąpił błąd', `${data.response}`, 'error')
             } else {
@@ -267,7 +267,7 @@ $('#domain-update').click(function() {
 })
 
 if (document.getElementById('recordType'))
-    document.getElementById('recordType').addEventListener('input', e => {
+    document.getElementById('recordType').addEventListener('input', (e) => {
         if (
             e.srcElement.value.toLowerCase() === 'a' ||
             e.srcElement.value.toLowerCase() === 'cname'
@@ -279,7 +279,7 @@ if (document.getElementById('recordType'))
     })
 
 if (document.getElementById('zoneEditorType'))
-    document.getElementById('zoneEditorType').addEventListener('input', e => {
+    document.getElementById('zoneEditorType').addEventListener('input', (e) => {
         if (
             e.srcElement.value.toLowerCase() === 'a' ||
             e.srcElement.value.toLowerCase() === 'cname'
@@ -290,7 +290,7 @@ if (document.getElementById('zoneEditorType'))
         }
     })
 
-document.getElementById('notifications').addEventListener('click', e => {
+document.getElementById('notifications').addEventListener('click', (e) => {
     $.post('/api/readNotifications', {
         notificationID: 'all',
     })
