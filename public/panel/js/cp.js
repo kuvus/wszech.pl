@@ -1,5 +1,5 @@
 const ipRegex = /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/
-
+const domainRegex = /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$/
 $('.btn-d').click(function () {
     const type = $(this).data('swal') ? $(this).data('swal') : false
     const action = $(this).data('swal') ? $(this).data('stype') : false
@@ -119,7 +119,9 @@ $('#registerCheck').click(function (e) {
             } else {
                 $('#collapseStepOne').collapse('hide')
                 $('#collapseStepTwo').collapse('show')
-                $('#subdomainConfirm').html(`${domain}<i>.wszech.pl</i>`)
+                $('#subdomainConfirm').html(
+                    `${domain.replace(/(<([^>]+)>)/gi, '')}<i>.wszech.pl</i>`
+                )
                 $('#cardOne').removeClass('card-primary')
                 $('#cardOne').addClass('card-secondary')
                 $('#cardTwo').removeClass('card-secondary')
@@ -148,6 +150,11 @@ $('#stepTwoConfirm').click(function (e) {
                 'Wpis typu A musi mieć wartość będącą adresem IP.'
             )
         }
+    } else if (!domainRegex.test($('#recordValue').val())) {
+        stepTwoError.removeClass('d-none')
+        return stepTwoError.text(
+            'Wpis typu CNAME musi mieć wartość będącą domeną.'
+        )
     }
     $('#collapseStepTwo').collapse('hide')
     $('#collapseStepThree').collapse('show')
@@ -268,21 +275,25 @@ $('#domain-update').click(function () {
 
 if (document.getElementById('recordType'))
     document.getElementById('recordType').addEventListener('input', (e) => {
-        if (
-            e.srcElement.value.toLowerCase() === 'a' ||
-            e.srcElement.value.toLowerCase() === 'cname'
-        ) {
+        if (e.target.value.toLowerCase() === 'a') {
             document.getElementById('proxyCheck').classList.remove('d-none')
+            e.target.value.toLowerCase() === 'cname'
+                ? document.getElementById('cf-info').classList.remove('d-none')
+                : null
+        } else if (e.target.value.toLowerCase() === 'cname') {
+            document.getElementById('proxyCheck').classList.remove('d-none')
+            document.getElementById('cf-info').classList.remove('d-none')
         } else {
             document.getElementById('proxyCheck').classList.add('d-none')
+            document.getElementById('cf-info').classList.add('d-none')
         }
     })
 
 if (document.getElementById('zoneEditorType'))
     document.getElementById('zoneEditorType').addEventListener('input', (e) => {
         if (
-            e.srcElement.value.toLowerCase() === 'a' ||
-            e.srcElement.value.toLowerCase() === 'cname'
+            e.target.value.toLowerCase() === 'a' ||
+            e.target.value.toLowerCase() === 'cname'
         ) {
             document.getElementById('proxyCheck').classList.remove('d-none')
         } else {
