@@ -1,5 +1,5 @@
 const ipRegex = /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/
-const cnameRegex = /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$/
+const dsRegex = /([a-z0-9|-]+\.)*[a-z0-9|-]+\.[a-z]+/
 const domainRegex = /^([aA-zZ1-9])+$/
 
 $('.btn-d').click(function () {
@@ -162,18 +162,35 @@ $('#stepTwoConfirm').click(function (e) {
                 'Wpis typu A musi mieć wartość będącą adresem IP.'
             )
         }
-    } else if (!cnameRegex.test($('#recordValue').val())) {
-        stepTwoError.removeClass('d-none')
+    } else if (recordType.val() === 'CNAME' || recordType.val() === 'NS') {
+        if (!dsRegex.test($('#recordValue').val())) {
+            stepTwoError.removeClass('d-none')
+            if (recordType.val() === 'CNAME')
+                return stepTwoError.text(
+                    'Wpis typu CNAME musi mieć wartość będącą domeną.'
+                )
+            else
+                return stepTwoError.text(
+                    'Wpis typu NS musi mieć wartość będącą domeną.'
+                )
+        }
+    } else {
         return stepTwoError.text(
-            'Wpis typu CNAME musi mieć wartość będącą domeną.'
+            'Wystąpił błąd podczas sprawdzania wartości wpisu.'
         )
     }
+
     $('#collapseStepTwo').collapse('hide')
     $('#collapseStepThree').collapse('show')
+
+    const sanitizedRecordType = DOMPurify.sanitize(recordType.val())
+    const sanitizedRecordValue = DOMPurify.sanitize(recordValue.val())
+
     $('#recordConfirm').html(
-        `<p>Typ: ${recordType.val()}<br>Wartość: ${recordValue
-            .val()
-            .replace(/(<([^>]+)>)/gi, '')}</p>`
+        `<p>Typ: ${sanitizedRecordType}<br>Wartość: ${sanitizedRecordValue.replace(
+            /(<([^>]+)>)/gi,
+            ''
+        )}</p>`
     )
     $('#cardTwo').removeClass('card-primary')
     $('#cardTwo').addClass('card-secondary')
