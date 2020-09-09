@@ -11,6 +11,27 @@ const sleep = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
+const turnModal = (modalID, state, cancel) => {
+    if (!modalID) return
+
+    const modal = document.getElementById(modalID)
+
+    if (state === 'show') {
+        modal.style.display = 'block'
+        modal.style.paddingRight = '17px'
+        modal.className = 'modal fade show'
+
+        document.body.classList.add('modal-open')
+    } else {
+        modal.style.display = 'none'
+        modal.className = 'modal fade'
+
+        document.body.classList.remove('modal-open')
+
+        if (cancel) btnSwitch('check-button', 'success')
+    }
+}
+
 const check = async (data) => {
     const captchaResponse = data.response.toLowerCase()
     if (!captchaResponse) {
@@ -100,6 +121,19 @@ function captchaExpiredCallback() {
 
 captchaModal.addEventListener('hide.bs.modal', async () => {
     btnSwitch('check-button', 'success')
+    turnModal('captchaModal', 'hide')
+})
+
+captchaModal.addEventListener('show.bs.modal', async () => {
+    turnModal('captchaModal', 'show')
+})
+
+document.querySelectorAll(`[data-dismiss*="modal"]`).forEach((el) => {
+    console.log(el.dataset)
+    el.addEventListener('click', (e) => {
+        e.preventDefault()
+        turnModal(el.dataset.dismissId, 'hide', true)
+    })
 })
 
 document.getElementById('response-btn').addEventListener('click', (e) => {
@@ -138,9 +172,7 @@ const find = async () => {
             return false
         }
     } else {
-        captchaModal.style.display = 'block'
-        captchaModal.style.paddingRight = '17px'
-        captchaModal.className = 'modal fade show'
+        turnModal('captchaModal', 'show')
         $('#modal-domain-input').val($('#check-input').val())
         document.getElementById(
             'modal-domain-input'
@@ -162,8 +194,7 @@ captchaForm.addEventListener('submit', async (e) => {
         return
     }
 
-    captchaModal.style.display = 'none'
-    captchaModal.className = 'modal fade'
+    turnModal('captchaModal', 'hide')
 
     const formData = new FormData(captchaForm)
     const searchParams = new URLSearchParams()
