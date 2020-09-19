@@ -1,0 +1,83 @@
+                <div class="content">
+                    <div class="container-fluid">
+                        <% if (messages.length > 0) { let message = JSON.parse(messages[0]) %>
+                            <div class="alert alert-<%= message.state %>" role="alert">
+                                <%= message.message %>
+                            </div>
+                        <% } %>
+                        <div class="row">
+
+                                <div class="col">
+                                    <div class="small-box bg-gradient-success">
+                                        <div class="inner text-md-center">
+                                            <h3><%- domainCount  %></h3>
+                                            <p>Liczba zarejestrowanych domenn</p>
+                                        </div>
+                                        <a href="/user/domains" class="small-box-footer">Przejdź</a>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="small-box bg-gradient-blue">
+                                        <div class="inner text-md-center">
+                                            <h3><%- userCount %></h3>
+                                            <p>Liczba użytkowników</p>
+                                        </div>
+                                        <a href="#" class="small-box-footer" data-toggle="modal" data-target="#accountTypes">Przejdź</a>
+                                    </div>
+                                </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="accountTypes" tabindex="-1" role="dialog" aria-labelledby="accountTypes" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                  <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Typy kont</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                  </div>
+                                  <div class="modal-body text-center">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Basic</th>
+                                                    <th scope="col">Premium</th>
+                                                    <th scope="col">Unlimited</th>
+                                                    <th scope="col">Partner</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Limit subdomen</td>
+                                                    <td>5</td>
+                                                    <td>10</td>
+                                                    <td><i class="fas fa-infinity"></i></td>
+                                                    <td><i class="fas fa-infinity"></i></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Czas odnowienia</td>
+                                                    <td>6 msc.</td>
+                                                    <td>1 rok</td>
+                                                    <td>1 rok</td>
+                                                    <td>6 msc.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>API</td>
+                                                    <td><i class="fas fa-times"></i></td>
+                                                    <td><i class="fas fa-times"></i></td>
+                                                    <td><i class="fas fa-times"></i></td>
+                                                    <td><i class="fas fa-check"></i></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                  </div>
+                                  <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Zamknij</button>
+                                  </div>
+                            </div>
+                      </div>
+                </div>

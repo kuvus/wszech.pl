@@ -5,36 +5,28 @@ const md5 = require('md5')
 const db = require(__basedir + '/inc/db')
 const notification = require(__basedir + '/inc/notifications')
 
-const accountTypes = [
-    {name: 'Basic', limit: 5},
-    {name: 'Premium', limit: 10},
-    {name: 'Unlimited', limit: 0},
-]
-
 module.exports = (req, res) => {
     notification.getNotifications(req.user.name, (notifications) => {
         db.query(
-            'SELECT count(*) as total FROM domains WHERE owner = ?',
+            'SELECT count(*) as total FROM domains',
             req.user.name,
-            (err, result) => {
+            (err, domainCount) => {
                 db.query(
-                    'SELECT * FROM broadcasts ORDER BY id DESC LIMIT 1',
+                    'SELECT count(*) as total FROM users',
                     [],
-                    (err, broadcast) => {
+                    (err, userCount) => {
                         res.render('panel/main', {
                             title: title,
                             view: 'overview',
+                            viewType: 'admin',
                             page: 'Podsumowanie',
                             nick: req.user.name,
                             avatarHash: md5(
                                 req.user.mail.toString().toLowerCase()
                             ),
                             nav: navLinks,
-                            domainCount: result[0]['total'],
-                            limit: accountTypes[req.user.accountType]['limit'],
-                            accountType:
-                                accountTypes[req.user.accountType]['name'],
-                            broadcast: broadcast[0]['content'],
+                            userCount: userCount[0]['total'],
+                            domainCount: domainCount[0]['total'],
                             side: [
                                 {
                                     active: true,
@@ -48,12 +40,12 @@ module.exports = (req, res) => {
                                     href: 'domains',
                                     icon: 'far fa-list-ul',
                                 },
-                                // {
-                                //     active: false,
-                                //     name: 'Ustawienia',
-                                //     href: 'settings',
-                                //     icon: 'fal fa-cog',
-                                // },
+                                {
+                                    active: false,
+                                    name: 'Lista użytkowników',
+                                    href: 'users',
+                                    icon: 'fas fa-users',
+                                },
                             ],
                             messages: req.flash('activationMailMessage'),
                             notifications,

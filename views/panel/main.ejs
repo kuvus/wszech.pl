@@ -49,7 +49,11 @@
                         </div>
                     </div>
                 </div>
-                <%- include(`user/${view}`) %>
+                <% if(typeof viewType !== 'undefined' && viewType === 'admin') { %>
+                    <%- include(`admin/${view}`) %>
+                <% } else { %>
+                     <%- include(`user/${view}`) %>
+                <% } %>
             </div>
 
 <% include footer %>
